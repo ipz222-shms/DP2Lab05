@@ -4,7 +4,7 @@ namespace LightHtmlLibrary;
 
 public class LightElementNode(string tag) : ILightNode
 {
-    private readonly List<string> _classes = [];
+    protected readonly List<string> _classes = [];
     private readonly List<ILightNode> _children = [];
     public string Tag { get; set; } = tag;
     public bool IsSingle { get; set; }
@@ -47,7 +47,7 @@ public class LightElementNode(string tag) : ILightNode
 
     public string OuterHTML() => Render();
 
-    public string Render()
+    public virtual string Render()
     {
         StringBuilder sb = new($"<{Tag}");
         
