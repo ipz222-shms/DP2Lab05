@@ -2,15 +2,14 @@
 
 namespace LightHtmlLibrary;
 
-public class LightElementNode(string tag) : ILightNode
+public class LightElementNode(string tag) : LightNodeBase
 {
-    protected readonly List<string> _classes = [];
-    private readonly List<ILightNode> _children = [];
+    private readonly List<LightNodeBase> _children = [];
     public string Tag { get; set; } = tag;
     public bool IsSingle { get; set; }
     public string? Display { get; set; }
     public IEnumerable<string> Classes => new List<string>(_classes);
-    public IEnumerable<ILightNode> Children => new List<ILightNode>(_children);
+    public IEnumerable<LightNodeBase> Children => new List<LightNodeBase>(_children);
     public int ChildrenCount => _children.Count;
     
     public event EventHandler? OnClick;
@@ -18,15 +17,19 @@ public class LightElementNode(string tag) : ILightNode
     public event EventHandler? OnMouseOver;
     public event EventHandler? OnMouseOut;
 
-    public void AppendChild(ILightNode child)
+    public void AppendChild(LightNodeBase child)
     {
         if (IsSingle)
             throw new ArgumentException("Single nodes can't contain any children!");
         _children.Add(child);
+        _onInserted();
     }
 
-    public void RemoveChild(ILightNode child)
-        => _children.Remove(child);
+    public void RemoveChild(LightNodeBase child)
+    {
+        _children.Remove(child);
+        _onRemoved(child);
+    }
 
     public void AddClass(string css)
     {
@@ -47,15 +50,21 @@ public class LightElementNode(string tag) : ILightNode
 
     public string OuterHTML() => Render();
 
-    public virtual string Render()
+    protected override string RenderNode()
     {
         StringBuilder sb = new($"<{Tag}");
-        
+
         if (Display != null)
+        {
             sb.Append($" style=\"display:{Display};\"");
-        
+            _onStylesApplied();
+        }
+
         if (_classes.Count != 0)
+        {
             sb.Append($" class=\"{string.Join(' ', _classes)}\"");
+            _onClassListApplied();
+        }
         
         if (!IsSingle)
         {

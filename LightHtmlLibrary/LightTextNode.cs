@@ -1,8 +1,12 @@
 ﻿namespace LightHtmlLibrary;
 
-public class LightTextNode(string text) : ILightNode
+public class LightTextNode(string text) : LightNodeBase
 {
     public string InnerText { get; set; } = text;
 
-    public string Render() => InnerText;
+    protected override string RenderNode()
+    {
+        _onTextRendered();
+        return InnerText;
+    }
 }
