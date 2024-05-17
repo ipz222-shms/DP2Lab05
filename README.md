@@ -11,7 +11,7 @@ TODO:
 - [ ] [Завдання 1](#user-content-завдання-1)
   - [x] Node Events
   - [x] Image Node
-  - [ ] Lifecycle Hooks
+  - [x] Lifecycle Hooks
 
 ---
 
