@@ -12,6 +12,11 @@ public class LightElementNode(string tag) : ILightNode
     public IEnumerable<string> Classes => new List<string>(_classes);
     public IEnumerable<ILightNode> Children => new List<ILightNode>(_children);
     public int ChildrenCount => _children.Count;
+    
+    public event EventHandler? OnClick;
+    public event EventHandler? OnDblClick;
+    public event EventHandler? OnMouseOver;
+    public event EventHandler? OnMouseOut;
 
     public void AppendChild(ILightNode child)
     {
@@ -68,4 +73,11 @@ public class LightElementNode(string tag) : ILightNode
 
         return sb.ToString();
     }
+    
+    public void EmulateClick() => OnClick?.Invoke(this, EventArgs.Empty);
+    public void EmulateDblClick() => OnDblClick?.Invoke(this, EventArgs.Empty);
+    public void EmulateMouseOver() => OnMouseOver?.Invoke(this, EventArgs.Empty);
+    public void EmulateMouseOut() => OnMouseOut?.Invoke(this, EventArgs.Empty);
+    
+    public override string ToString() => Tag;
 }
