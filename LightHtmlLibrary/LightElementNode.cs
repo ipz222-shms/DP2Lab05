@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using LightHtmlLibrary.Iterator;
 
 namespace LightHtmlLibrary;
 
@@ -81,6 +82,16 @@ public class LightElementNode(string tag) : LightNodeBase
             sb.Append(" />");
 
         return sb.ToString();
+    }
+
+    public IIterator GetIterator(IteratorType type = IteratorType.DepthFirst)
+    {
+        return type switch
+        {
+            IteratorType.DepthFirst => new DFIterator(this),
+            IteratorType.BreadthFirst => new BFIterator(this),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
     }
     
     public void EmulateClick() => OnClick?.Invoke(this, EventArgs.Empty);
