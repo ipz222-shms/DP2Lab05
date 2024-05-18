@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using LightHtmlLibrary.ImageLoaders;
+using LightHtmlLibrary.Visitors;
 
 namespace LightHtmlLibrary;
 
@@ -14,6 +15,8 @@ public class LightImageNode : LightElementNode
         IsSingle = true;
         _loader = loader;
     }
+    
+    public override string Accept(IVisitor visitor) => visitor.Visit(this);
 
     protected override string RenderNode()
     {
