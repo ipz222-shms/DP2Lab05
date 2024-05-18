@@ -1,4 +1,6 @@
-﻿namespace LightHtmlLibrary;
+﻿using LightHtmlLibrary.Visitors;
+
+namespace LightHtmlLibrary;
 
 public abstract class LightNodeBase : ILightNode
 {
@@ -17,6 +19,8 @@ public abstract class LightNodeBase : ILightNode
         return RenderNode();
     }
 
+    public abstract string Accept(IVisitor visitor);
+
     protected abstract string RenderNode();
 
     protected virtual void _onCreated() => OnCreated?.Invoke(this);
@@ -25,5 +29,4 @@ public abstract class LightNodeBase : ILightNode
     protected virtual void _onRemoved(LightNodeBase? node = null) => OnRemoved?.Invoke(node ?? this);
     protected virtual void _onClassListApplied() => OnClassListApplied?.Invoke(this, _classes);
     protected virtual void _onTextRendered() => OnTextRendered?.Invoke(this);
-    
 }

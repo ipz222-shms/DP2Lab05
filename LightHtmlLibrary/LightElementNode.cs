@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using LightHtmlLibrary.Iterator;
+using LightHtmlLibrary.Visitors;
 
 namespace LightHtmlLibrary;
 
@@ -50,6 +51,8 @@ public class LightElementNode(string tag) : LightNodeBase
     }
 
     public string OuterHTML() => Render();
+
+    public override string Accept(IVisitor visitor) => visitor.Visit(this);
 
     protected override string RenderNode()
     {

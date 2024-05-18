@@ -13,6 +13,7 @@ TODO:
   - [x] Image Node
   - [x] Lifecycle Hooks
   - [x] Iterator
+  - [x] Visitor
 
 ---
 
