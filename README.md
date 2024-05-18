@@ -8,7 +8,7 @@
 
 TODO:
 - [x] [Завдання 0](#user-content-завдання-0)
-- [ ] [Завдання 1](#user-content-завдання-1)
+- [x] [Завдання 1](#user-content-завдання-1)
   - [x] Node Events
   - [x] Image Node
   - [x] Lifecycle Hooks
